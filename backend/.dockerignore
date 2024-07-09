@@ -1,0 +1,6 @@
+env
+.dockerignore
+**/.git
+**/.DS_Store
+**/env
+**/inotify-proxy/**

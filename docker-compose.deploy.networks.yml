@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  proxy:
+    networks:
+      - traefik-public
+      - default
+
+  frontend:
+    networks:
+      - traefik-public
+      - default
+
+  backend:
+    networks:
+      - traefik-public
+      - default
+
+networks:
+  traefik-public:
+    external: true

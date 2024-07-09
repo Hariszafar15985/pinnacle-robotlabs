@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  backend:
+    image: '${DOCKER_IMAGE_BACKEND}:${TAG-latest}'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
+  frontend:
+    image: '${DOCKER_IMAGE_FRONTEND}:${TAG-latest}'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
+
+  redis:
+    image: redis
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
+
+  db:
+    image: postgres:15-alpine
+
+  proxy:
+    image: pinnaclepublishing/traefik:robotlab
+
+  worker:
+    image: '${DOCKER_IMAGE_BACKEND}:${TAG-latest}'

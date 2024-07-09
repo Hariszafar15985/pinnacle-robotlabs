@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  proxy:
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  frontend:
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      replicas: 3
+
+  backend:
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      replicas: 3
+
+  worker:
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      replicas: 2
+
+  db:
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      replicas: 1
+    volumes:
+      - pg_data:/var/lib/postgresql/data

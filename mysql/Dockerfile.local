@@ -1,0 +1,21 @@
+FROM mariadb:latest
+MAINTAINER Bo Henriksen "bo.holch@gmail.com"
+
+ARG MYSQL_ROOT_PASSWORD
+ENV MYSQL_ROOT_PASSWORD ${MYSQL_ROOT_PASSWORD}
+ARG MYSQL_PASSWORD
+ENV MYSQL_PASSWORD ${MYSQL_PASSWORD}
+ARG MYSQL_DATABASE
+ENV MYSQL_DATABASE ${MYSQL_DATABASE}
+ARG MYSQL_USER
+ENV MYSQL_USER=${MYSQL_USER}
+
+ADD pinnacle.sql /docker-entrypoint-initdb.d
+
+# this need to stay the same for script to work
+#ENV MYSQL_USER mysql
+
+#COPY ./localdb-run.sh /
+#RUN chmod 755 /localdb-run.sh
+
+#ENTRYPOINT ["/localdb-run.sh"] 

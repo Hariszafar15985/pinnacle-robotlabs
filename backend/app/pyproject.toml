@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "robotlab"
+version = "0.1.0"
+description = ""
+authors = ["cherry <hahungkk@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.11"
+djangorestframework = "~3.14"
+django-filter = "~23.5"
+Markdown = "~3.4.3"
+requests = "~2.25.1"
+pandas = {extras = ["performance"], version = "~2.2"}
+celery = "~5.2.7"
+django-cors-headers = "~4.3.0"
+redis = "~4.5.4"
+pendulum = "~2.1.2"
+ipython = "*"
+django-redis = "~5.2.0"
+scipy = "~1.10.0"
+django-storages = "~1.13.2"
+boto3 = "~1.26.91"
+python-logstash = "~0.4.8"
+django-json-widget = "~1.1.1"
+psycopg = "^3.1.9"
+coverage = "~7.2.7"
+uvicorn = "~0.27.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  proxy:
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        # HTTP-to-HTTPS Redirect
+        - "traefik.http.routers.http-catchall.entrypoints=http"
+        - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
+        - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+        - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+        - "traefik.http.services.justAdummyService.loadbalancer.server.port=1337"
+        - "traefik.http.routers.traefik-rtr.entrypoints=https"
+        - "traefik.http.routers.traefik-rtr.rule=Host(`traefik$STAGESUFFIX.$DOMAIN`)"
+        - "traefik.http.routers.traefik-rtr.tls=true"
+        - "traefik.http.routers.traefik-rtr.tls.domains[0].main=$DOMAIN"
+        - "traefik.http.routers.traefik-rtr.tls.domains[0].sans=*.$DOMAIN"
+        - "traefik.http.routers.traefik-rtr.service=api@internal"
+        - "traefik.http.routers.traefik-rtr.middlewares=chain-oauth@file" 
+
+  backend:
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.backend-rtr.entrypoints=https"
+        - "traefik.http.routers.backend-rtr.rule=Host(`api$STAGESUFFIX.$DOMAIN`)"
+        - "traefik.http.routers.backend-rtr.tls=true"
+        - "traefik.http.routers.backend-rtr.service=backend-svc"
+        - "traefik.http.services.backend-svc.loadbalancer.server.port=8000"
+
+  frontend:
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.frontend-rtr.entrypoints=https"
+        - "traefik.http.routers.frontend-rtr.rule=Host(`$DOMAIN`)"
+        - "traefik.http.routers.frontend-rtr.tls=true"
+        - "traefik.http.routers.frontend-rtr.service=frontend-svc"
+        - "traefik.http.services.frontend-svc.loadbalancer.server.port=9000"
